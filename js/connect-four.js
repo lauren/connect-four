@@ -26,12 +26,12 @@
   };
 
   Game.prototype.updateStatus = function (message) {
-    this.statusEl.innerHTML = message ? message : "Player " + this.turn + "'s turn"; 
+    this.statusEl.innerHTML = message ? message : "Player " + this.turn + "'s turn."; 
     this.statusHole.dataset.takenByPlayer = this.turn;
   }
 
   Game.prototype.updateDetails = function (message) {
-    this.detailsEl.innerHTML = message;
+    this.detailsEl.innerHTML = message ? message  : "";
   }
 
   Game.prototype.play = function (column) {
@@ -66,6 +66,7 @@
     this.round = 1;
     this.turn = 1;
     this.updateStatus();
+    this.updateDetails();
     this.board.holes.map(function (row) {
       row.map(function (hole) {
         hole.reset();
