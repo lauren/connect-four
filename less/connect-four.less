@@ -37,6 +37,10 @@
   transition: box-shadow @delay @pace;
 }
 
+.background-color-transition (@delay: 0.5s, @pace: ease-in-out) {
+  .transition(background-color, @delay, @pace);
+}
+
 //// variables
 
 @helveticaNeueLight: "HelveticaNeue-Light","Helvetica Neue Light","Helvetica Neue",Helvetica,sans-serif;
@@ -86,6 +90,7 @@ body {
   border: 1px solid #fff;
   .rounded-corners(40px);
   .shadow-transition;
+  .background-color-transition;
   &:hover {
     .inner-shadow(20px, @borderColor);
     cursor: pointer;
@@ -93,9 +98,11 @@ body {
   }
   &[data-taken-by-player="1"] {
     background-color: red;
+    .background-color-transition;
   }
   &[data-taken-by-player="2"] {
     background-color: blue;
+    .background-color-transition;
   }
   &[data-winner="true"] {
     .inner-shadow(40px, #fff);
