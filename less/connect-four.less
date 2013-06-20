@@ -1,4 +1,4 @@
-@import url(http://reset5.googlecode.com/hg/reset.min.css);
+// @import url(http://reset5.googlecode.com/hg/reset.min.css);
 
 //// mixins
 
@@ -65,12 +65,21 @@ body {
 
 .label {
   font-family: @labelFontFamily;
-  margin-bottom: 20px;
+  margin-bottom: 10px;
   font-size: 28px;
   .message {
     display: inline-block;
     vertical-align: middle;
+    padding:0px;
+    margin:0px;
   }
+}
+
+.details {
+  margin-bottom: 20px;
+  font-size: 16px;
+  min-height: 20px;
+  font-family: @labelFontFamily;
 }
 
 .connect-four-board {

@@ -6,7 +6,8 @@
   },
       gameConstants = {
         statusEl: document.getElementById("status-message"),
-        statusHole: document.getElementById("turn-indicator")
+        statusHole: document.getElementById("turn-indicator"),
+        detailsEl: document.getElementById("status-details")
   };
 
   var Game = function (args) {
@@ -29,6 +30,10 @@
     this.statusHole.dataset.takenByPlayer = this.turn;
   }
 
+  Game.prototype.updateDetails = function (message) {
+    this.detailsEl.innerHTML = message;
+  }
+
   Game.prototype.play = function (column) {
     if (this.winner === 0 && this.board.columnAvailable(column)) {
       var playingHole = this.board.findNextHole(column);
@@ -36,7 +41,8 @@
       playingHole.status = this.turn;
       playingHole.domEl.dataset.takenByPlayer = this.turn;
       if (this.board.checkForWinner(playingHole)) {
-        this.updateStatus("Player " + this.turn + " won! <a href='#' data-action='reset'>Start a new game</a>.");
+        this.updateStatus("Player " + this.turn + " won!");
+        this.updateDetails("<a href='#' data-action='reset'>Start a new game</a>.")
         this.board.checkForWinner(playingHole).map(function (hole) {
           hole.domEl.dataset.winner = "true";
         });
@@ -48,9 +54,10 @@
         this.updateStatus();
       } 
     } else if (this.winner === 0 && !this.board.columnAvailable(column)) {
-      this.updateStatus("That column is full! Player " + this.turn + ", pick another column.");
+      this.updateDetails("That column is full! Pick another column.");
     } else {
-      this.updateStatus("Player " + this.turn + " won! <a href='#' data-action='reset'>Start a new game</a>.");
+      this.updateStatus("Player " + this.turn + " won!");
+      this.updateDetails("<a href='#' data-action='reset'>Start a new game</a>.")
     }
   };
 
