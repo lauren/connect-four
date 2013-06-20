@@ -43,16 +43,28 @@
   Board.prototype.checkForWinner = function (hole) {
     var horizontalMatches = this.findHorizontalMatches(hole),
         verticalMatches = this.findVerticalMatches(hole),
-        rightDiagonalMatches = this.findDiagonalMatches(hole, "right"),
-        leftDiagonalMatches = this.findDiagonalMatches(hole, "left");
+        rightUpDiagonalMatches = this.findDiagonalMatches(hole, "right", "up"),
+        leftUpDiagonalMatches = this.findDiagonalMatches(hole, "left", "up"),
+        rightDownDiagonalMatches = this.findDiagonalMatches(hole, "right", "down"),
+        leftDownDiagonalMatches = this.findDiagonalMatches(hole, "left", "down");
+    console.log(horizontalMatches);
+    console.log(verticalMatches);
+    console.log(rightUpDiagonalMatches);
+    console.log(leftUpDiagonalMatches);
+    console.log(rightDownDiagonalMatches);
+    console.log(leftDownDiagonalMatches);
     if (horizontalMatches.length >= 4) {
       return horizontalMatches;
     } else if (verticalMatches.length >= 4) {
       return verticalMatches;
-    } else if (rightDiagonalMatches.length >= 4) {
-      return rightDiagonalMatches;
-    } else if (leftDiagonalMatches.length >= 4) {
-      return leftDiagonalMatches;
+    } else if (rightUpDiagonalMatches.length >= 4) {
+      return rightUpDiagonalMatches;
+    } else if (leftUpDiagonalMatches.length >= 4) {
+      return leftUpDiagonalMatches;
+    } else if (rightDownDiagonalMatches.length >= 4) {
+      return rightDownDiagonalMatches;
+    } else if (leftDownDiagonalMatches.length >= 4) {
+      return leftDownDiagonalMatches;
     } else {
       return false;
     }
@@ -66,7 +78,7 @@
         end = boundaries.max,
         holeStatus = hole.status,
         checker = function (column, matches) {
-          if (column > end || column < 0) {
+          if (column >= end || column < 0) {
             return matches;
           } else {
             return (holeStatus === board.holes[row][column].status) 
@@ -94,8 +106,9 @@
     return checker(currentRow, []);
   };
 
-  Board.prototype.findDiagonalMatches = function (hole, direction) {
-    var columnIncrementer = direction === "left" ? 1 : -1,
+  Board.prototype.findDiagonalMatches = function (hole, xDirection, yDirection) {
+    var columnIncrementer = xDirection === "left" ? 1 : -1,
+        rowIncrementer = yDirection === "down" ? 1 : -1
         board = this,
         currentColumn = hole.columnId,
         currentRow = hole.rowId,
@@ -106,7 +119,7 @@
             return matches;
           } else {
             return (hole.status === board.holes[row][column].status)
-              ? checker(row + 1, column + columnIncrementer, matches.concat([board.holes[row][column]]))
+              ? checker(row + rowIncrementer, column + columnIncrementer, matches.concat([board.holes[row][column]]))
               : matches;
           }
         }

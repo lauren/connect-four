@@ -33,8 +33,6 @@
       playingHole.findMatchableHoles(this.board.width,this.board.height);
       playingHole.status = this.turn;
       playingHole.domEl.dataset.takenByPlayer = this.turn;
-      this.turn = (this.turn === 2) ? 1 : 2;
-      this.round = (this.turn === 2) ? this.round + 1 : this.round;
       if (this.board.checkForWinner(playingHole)) {
         this.updateStatus("Player " + this.turn + " won! <a href='#' data-action='reset'>Start a new game</a>.");
         this.board.checkForWinner(playingHole).map(function (hole) {
@@ -43,7 +41,9 @@
         this.winner = this.turn;
         unbindEvent(document, "click", holeClickDelegator);
       } else {
-        this.updateStatus(); 
+        this.turn = (this.turn === 2) ? 1 : 2;
+        this.round = (this.turn === 2) ? this.round + 1 : this.round;
+        this.updateStatus();
       } 
     } else if (this.winner === 0 && !this.board.columnAvailable(column)) {
       this.updateStatus("That column is full! Player " + this.turn + ", pick another column.");
@@ -62,7 +62,6 @@
         hole.reset();
       });
     });
-    console.log(this);
     bindEvent(document, "click", holeClickDelegator);
   };
 
