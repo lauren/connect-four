@@ -84,14 +84,24 @@
         end = boundaries.max,
         holeStatus = hole.status,
         checker = function (column, matches) {
-          if (column >= end || column < 0) {
+          console.log("column");
+          console.log(column);
+          console.log("column status");
+          console.log(board.holes[row][column]);
+          console.log("matches");
+          console.log(matches);
+          if (column > end || column < 0 || matches.length >= 4) {
             return matches;
           } else {
             return (holeStatus === board.holes[row][column].status) 
               ? checker(column + 1, matches.concat([board.holes[row][column]]))
-              : checker(column + 1, matches);
+              : checker(column + 1, []);
           }
         };
+    console.log("hole");
+    console.log(hole);
+    console.log("boundaries");
+    console.log(boundaries);
     return checker(start, []);
   };
 
@@ -166,7 +176,7 @@
     var holeCol = this.columnId;
         holeRow = this.rowId,
         minX = Math.max(0,holeCol-3),
-        maxX = Math.min(boardWidth,holeCol+3);
+        maxX = Math.min(boardWidth-1,holeCol+3);
     return {min: minX, max: maxX};
   };
 
@@ -176,7 +186,6 @@
     this.domEl.dataset.winner = "false";
   };
 
-  exports.Hole = Hole;
   exports.Board = Board;
 
 })(this);

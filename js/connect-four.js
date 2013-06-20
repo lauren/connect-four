@@ -5,7 +5,8 @@
         boardEl: document.getElementById("connect-four-board"),
   },
       gameConstants = {
-        statusEl: document.getElementById("game-status")
+        statusEl: document.getElementById("status-message"),
+        statusHole: document.getElementById("turn-indicator")
   };
 
   var Game = function (args) {
@@ -25,6 +26,7 @@
 
   Game.prototype.updateStatus = function (message) {
     this.statusEl.innerHTML = message ? message : "Player " + this.turn + "'s turn"; 
+    this.statusHole.dataset.takenByPlayer = this.turn;
   }
 
   Game.prototype.play = function (column) {
@@ -56,7 +58,7 @@
     this.winner = 0;
     this.round = 1;
     this.turn = 1;
-    this.statusEl.innerHTML = "Player " + this.turn + "'s turn.";
+    this.updateStatus();
     this.board.holes.map(function (row) {
       row.map(function (hole) {
         hole.reset();
