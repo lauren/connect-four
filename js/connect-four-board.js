@@ -47,11 +47,17 @@
         leftUpDiagonalMatches = this.findDiagonalMatches(hole, "left", "up"),
         rightDownDiagonalMatches = this.findDiagonalMatches(hole, "right", "down"),
         leftDownDiagonalMatches = this.findDiagonalMatches(hole, "left", "down");
+    console.log("horizontal");
     console.log(horizontalMatches);
+    console.log("vertical");
     console.log(verticalMatches);
+    console.log("right up diag");
     console.log(rightUpDiagonalMatches);
+    console.log("left up diag");
     console.log(leftUpDiagonalMatches);
+    console.log("right down diag");
     console.log(rightDownDiagonalMatches);
+    console.log("left down diag");
     console.log(leftDownDiagonalMatches);
     if (horizontalMatches.length >= 4) {
       return horizontalMatches;
