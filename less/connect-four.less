@@ -1,0 +1,146 @@
+// @import url(http://reset5.googlecode.com/hg/reset.min.css);
+
+//// mixins
+
+.rounded-corners (@radius: 4px) {
+  -webkit-border-radius: @radius;
+  -moz-border-radius: @radius;
+  -o-border-radius: @radius;
+  border-radius: @radius;
+}
+
+.shadow (@shadow) {
+  -moz-box-shadow: @shadow;
+  -webkit-box-shadow: @shadow;
+  -o-border-radius: @shadow;
+  box-shadow: @shadow;
+}
+
+.inner-shadow (@blur, @color) {
+  -moz-box-shadow: inset 0 0 @blur @color;
+  -webkit-box-shadow: inset 0 0 @blur @color;
+  -o-border-radius: inset 0 0 @blur @color;
+  box-shadow: inset 0 0 @blur @color;
+}
+
+.transition (@transition: all, @delay: 0.5s, @pace: ease-in-out) {
+  -moz-transition: @transition @delay @pace;
+  -webkit-transition: @transition @delay @pace;
+  -o-transition: @transition @delay @pace;
+  transition: @transition @delay @pace;
+}
+
+.shadow-transition (@delay: 0.5s, @pace: ease-in-out) {
+  -moz-transition: -moz-box-shadow @delay @pace;
+  -webkit-transition: -webkit-box-shadow @delay @pace;
+  -o-transition: -o-box-shadow @delay @pace;
+  transition: box-shadow @delay @pace;
+}
+
+.background-color-transition (@delay: 0.5s, @pace: ease-in-out) {
+  .transition(background-color, @delay, @pace);
+}
+
+//// variables
+
+@helveticaNeueLight: "HelveticaNeue-Light","Helvetica Neue Light","Helvetica Neue",Helvetica,sans-serif;
+@helveticaNeueUltraLight: "HelveticaNeue-UltraLight","Helvetica Neue UltraLight","HelveticaNeue-Light","Helvetica Neue Light","Helvetica Neue",Helvetica,sans-serif;
+
+@darkGray: #333;
+@lightBlue: #52A8EC;
+
+@bodyFontFamily: @helveticaNeueUltraLight;
+@labelFontFamily: @helveticaNeueLight;
+
+@bodyFontColor: @darkGray;
+
+@borderColor: @darkGray;
+@borderHighlightColor: @lightBlue;
+
+body {
+  text-align: center;
+  margin:20px;
+  font-family: @bodyFontFamily;
+}
+
+.label {
+  font-family: @labelFontFamily;
+  margin-bottom: 10px;
+  font-size: 28px;
+  .message {
+    display: inline-block;
+    vertical-align: middle;
+    padding:0px;
+    margin:0px;
+  }
+}
+
+.details {
+  margin-bottom: 20px;
+  font-size: 16px;
+  min-height: 20px;
+  font-family: @labelFontFamily;
+}
+
+.connect-four-board {
+  margin: 0 auto;
+  padding: 8px 0px 5px 0px; 
+  overflow: hidden;
+  width: 360px;
+  background-color: @borderColor;
+}
+
+.hole {
+  display: inline-block;
+  width: 40px;
+  height: 40px;
+  margin: 2px 5px;
+  background-color: #fff;
+  border: 1px solid #fff;
+  .rounded-corners(40px);
+  .shadow-transition;
+  .background-color-transition;
+  &:hover {
+    .inner-shadow(20px, @borderColor);
+    cursor: pointer;
+    .shadow-transition;
+  }
+  &[data-taken-by-player="1"] {
+    background-color: red;
+    .background-color-transition;
+  }
+  &[data-taken-by-player="2"] {
+    background-color: blue;
+    .background-color-transition;
+  }
+  &[data-winner="true"] {
+    .inner-shadow(40px, #fff);
+    .shadow-transition;
+  }
+  &.turn-indicator {
+    vertical-align: middle;
+    .inner-shadow(0px, @borderColor);
+    &:hover {
+      .inner-shadow(0px, @borderColor);
+    }
+  }
+}
+
+@media (min-width: 768px) {
+  .connect-four-board {
+    width: 650px;
+    .row {
+      .hole {
+        width: 80px;
+        height: 80px;
+        .rounded-corners(80px);
+        &:hover {
+          .inner-shadow(40px, @borderColor);
+        }
+        &[data-winner="true"] {
+          .inner-shadow(80px, #fff);
+        }
+      }
+    }
+  }
+}
