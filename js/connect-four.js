@@ -26,7 +26,7 @@
   };
 
   Game.prototype.updateStatus = function (message) {
-    this.statusEl.innerHTML = message ? message : "Player " + this.turn + "'s turn."; 
+    this.statusEl.innerHTML = message ? message : "Your move, Player " + this.turn + "."; 
     this.statusHole.dataset.takenByPlayer = this.turn;
   }
 
@@ -35,13 +35,14 @@
   }
 
   Game.prototype.play = function (column) {
+    console.log(this.board);
     if (this.winner === 0 && this.board.columnAvailable(column)) {
       var playingHole = this.board.findNextHole(column);
       playingHole.findMatchableHoles(this.board.width,this.board.height);
       playingHole.status = this.turn;
       playingHole.domEl.dataset.takenByPlayer = this.turn;
       if (this.board.checkForWinner(playingHole)) {
-        this.updateStatus("Player " + this.turn + " won!");
+        this.updateStatus("Winner: Player " + this.turn + "!");
         this.updateDetails("<a href='#' data-action='reset'>Start a new game</a>.")
         this.board.checkForWinner(playingHole).map(function (hole) {
           hole.domEl.dataset.winner = "true";
